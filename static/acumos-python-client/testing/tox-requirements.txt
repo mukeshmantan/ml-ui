@@ -1,0 +1,14 @@
+pytest
+pytest-rerunfailures
+pytest-cov
+connexion
+pandas<0.21.0
+scikit-learn
+jsonschema
+keras
+h5py
+tensorflow
+pexpect
+pillow
+mock
+git+https://github.com/keras-team/keras-contrib.git#egg=keras_contrib

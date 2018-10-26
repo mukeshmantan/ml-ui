@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html ng-app="vmpredictor" lang="en">
+<!--<html  lang="en"> -->
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>ML Platform - Admin Theme</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/static/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/static/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="/static/vendor/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" type="text/css" href="/static/dist/css/image-mood-classes.css" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>VM Resource Prediction</title>
+    <script type="text/javascript" src="/static/dist/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/dist/js/angular.js"></script>
+    <script type="text/javascript" src=/static/dist/assets/vmpredictor.js"></script>
+
+    <script type="text/javascript" src="/static/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/dist/js/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <!-- <script type="text/javascript" src="assets/video-list.js"></script> -->
+
+
+    <!-- <link rel="stylesheet" type="text/css" href="assets/image-classes.css" /> -->
+    <link rel="stylesheet" type="text/css" href=/static/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/dist/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/dist/assets/vmpredictor.css" />
+
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">ML Model Admin</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <!--<ul class="nav navbar-top-links navbar-right">
+               
+            </ul> -->
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        </li>
+                        
+                         <li>
+                            <a href="#"><i class="fa fa-sitemap fa-fw"></i>Models<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="connector_cooler.html">Connector Cooler</a>
+                                </li>
+                                <li>
+                                    <a href="image_classifier.html">Image Classifier</a>
+                                </li>
+                                <li>
+                                    <a href="vmpredictor-int.html">VM Predictor</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>            
+                       
+                      
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+           
+    <!--<div class="row">
+      <div class="col-md-12">
+        <img class="img-responsive"  src="assets/header.png" />
+      </div>
+    </div> -->
+    <div class="row" ng-controller="VmPicker">
+      <div class="col-md-2">
+        <form>
+            <div >
+                <div class="form-group">
+                  <label>Customer VM</label>
+                  <select class="form-control" ng-model="vm.selected" ng-options="o as o for o in vm.options"></select>
+                </div>
+            </div>
+
+            <div ng-controller="DatepickerPopupCtrl">
+              <div class="form-group">
+                <label>Start Date:</label>
+                <p class="input-group">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dtFirst" is-open="popup1.opened"
+                         datepicker-options="dateOptions" ng-required="true" ng-disabled="true" close-text="Close" alt-input-formats="altInputFormats" />
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
+                </p>
+                <label>End Date:</label>
+                <p class="input-group">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dtLast" is-open="popup2.opened"
+                         datepicker-options="dateOptions" ng-required="true" ng-disabled="true" close-text="Close" alt-input-formats="altInputFormats" />
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div class="info_example">
+                <span class="title">Dashboard Use</span>
+                <p class="small">
+                    For a hosted <strong>Customer VM</strong>, this report indicates the <em>predicted</em> and actual resource
+                    usage for CPU, memory, and net throughput using historical ONAP records.
+                </p>
+                <p class="small">
+                    Subsequent policy updates can modify placement of VNFs within a cluster or host to optimize
+                    hardware utilization based on expected resource needs.
+                </p>
+                <p class="text-left small text-uppercase">
+                    <a href='http://www.research.att.com/projects/Video/'>Video and Multimedia Technologies Research</a>
+                </p>
+            </div>
+
+        </form>
+      </div>
+      <div class="col-md-10" >
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="text-center">Predicted and Actual {{graphs.options[graphs.selected].desc}} Report</h3>
+                <div class="graph_crop" >
+                    <img class="graph_zoom img-responsive " alt="{{graphs.options[graphs.selected].desc}}"
+                         title="{{graphs.options[graphs.selected].desc}}"
+                         src="assets/{{graphs.options[graphs.selected].path}}/{{vm.selected}}.png"  />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+              <div class="col-md-8 col-md-offset-2">
+                <div class="info_legend">
+                    <p class="small">
+                        <span >Legend</span>
+                        Indicated are raw (<span class="blue">blue</span>) and predicted (<span class="red">red</span>)
+                        plots for raw measurements, an averaged 95% usage,
+                        standard deviation, variance, and <em>most busy hours</em> for a VM.  Select among the graph
+                        thumbnails below for full reporting.
+                        Reported error is Average Absolute Error (AAE)
+                        (<var>abs(predict-actual)/max(predict,actual)</var>) where lower is better.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 border-padding" ng-repeat="(graph_type,graph) in graphs.options "
+                    ng-class="{'border-selected' : graph_type==graphs.selected }"
+                    ng-click="graphSwitch(graph_type)">
+                <div class="graph_crop" >
+                    <img class="graph_summary img-responsive " alt="{{graph.desc}}" title="{{graph.desc}}"
+                         src="assets/{{graph.path}}/{{vm.selected}}.png"  />
+                </div>
+                <p class="text-center text-uppercase">{{graph.desc}}</p>
+            </div>
+            <!--
+            <div class="col-md-4 border-padding">
+                <div class="graph_crop" >
+                    <img class="graph_summary img-responsive " alt="Memory usage" title="Memory usage"
+                         src="assets/charts/mem_usage/16a0ad6e-4aff-4eb7-ac73-37426abfd16d.png" />
+                </div>
+                <p class="text-center text-uppercase">Memory usage</p>
+            </div>
+            -->
+
+        </div>
+      </div>
+    </div>
+</div>
+            
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="/static/vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="/static/vendor/raphael/raphael.min.js"></script>
+    <script src="/static/vendor/morrisjs/morris.min.js"></script>
+    <script src="/static/data/morris-data.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/static/dist/js/sb-admin-2.js"></script>
+
+    <script type="text/javascript" src="/static/dist/js/jquery.js"></script>
+    <script type="text/javascript" src="/static/dist/protobuf/protobuf.min.js"></script>
+    <script type="text/javascript" src="/static/dist/js/thumbnailer.js"></script>
+    <script type="text/javascript" src="/static/dist/js/jquery-ajax-native.js"></script>
+    <script type="text/javascript" src="/static/dist/js/image-mood-classes.js"></script>
+    <script type="text/javascript" src="/static/dist/js/cooler-demo-framework.js"></script>
+    <script type="text/javascript" src=/static/dist/assets/vmpredictor.js"></script>
+
+</body>
+
+</html>
